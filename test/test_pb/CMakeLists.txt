@@ -50,6 +50,3 @@ add_executable(test_pb
 target_link_libraries(test_pb
   protobuf::libprotobuf
 )
-
-get_target_property(PROP test_pb INCLUDE_DIRECTORIES)
-message("${PROP}")
