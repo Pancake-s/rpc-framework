@@ -12,6 +12,7 @@ FetchContent_Declare(
 option(protobuf_BUILD_TESTS OFF)  # OR ADD DEF -Dprotobuf_USE_EXTERNAL_GTEST=ON
 FetchContent_MakeAvailable(protobuf)
 
+# Boost
 # FetchContent_Declare(
 #   boost
 #   GIT_REPOSITORY https://github.com/boostorg/boost.git
@@ -26,7 +27,6 @@ FetchContent_Declare(
   muduo
   GIT_REPOSITORY https://github.com/chenshuo/muduo.git
   GIT_TAG        v2.0.2
-  # OVERRIDE_FIND_PACKAGE
-  FIND_PACKAGE_ARGS NAMES Muduo
+  OVERRIDE_FIND_PACKAGE
 )
 FetchContent_MakeAvailable(muduo)

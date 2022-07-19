@@ -2,7 +2,7 @@
 #include <string>
 
 #include "user.pb.h"
-#include "mrpcprovider.h"
+#include "mrpcprovider.h" // 有隐藏依赖的问题
 #include "mprpcapplication.h"
 
 // 本地服务 Login() GetFriendLists()
