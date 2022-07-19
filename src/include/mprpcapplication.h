@@ -1,4 +1,5 @@
 #pragma once
+#include "mprpcconfig.h"
 
 class MprpcApplication {
   public:
@@ -7,6 +8,7 @@ class MprpcApplication {
         static MprpcApplication app;
         return app;
     }
+    static MprpcConfig& GetConfig();
   protected:
     MprpcApplication() { };
     ~MprpcApplication() = default;
@@ -14,4 +16,6 @@ class MprpcApplication {
     MprpcApplication(MprpcApplication&&) = delete;
     MprpcApplication& operator=(const MprpcApplication&) = delete;
     MprpcApplication& operator=(MprpcApplication&&) = delete;
+  private:
+    static MprpcConfig m_config;
 };

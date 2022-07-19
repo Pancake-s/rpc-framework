@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/test.dir/main.cc.o CMakeFiles/test.dir/test.pb.cc.o  -o ../output/test  /usr/lib/x86_64-linux-gnu/libprotobuf.so -lpthread 

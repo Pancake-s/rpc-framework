@@ -1,9 +1,4 @@
-find_package(Protobuf)
-
-add_executable(test
-  main.cc
-  test.pb.cc)
-
-target_link_libraries(test
-  protobuf::libprotobuf
-)
+add_subdirectory(test_pb)
+add_subdirectory(test_opt)
+add_subdirectory(test_boost)
+add_subdirectory(test_muduo)
