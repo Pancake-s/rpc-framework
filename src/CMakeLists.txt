@@ -3,6 +3,7 @@ find_package(protobuf REQUIRED)
 add_library(mprpc
   mprpcapplication.cc
   mprpcprovider.cc
+  mprpcconfig.cc
 )
 
 target_include_directories(mprpc

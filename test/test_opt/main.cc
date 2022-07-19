@@ -1,22 +1,25 @@
-#include <iostream>
+// #include <iostream>
+#include <stdio.h>
 #include <unistd.h>
 
 int main(int argc, char **argv) {
   int o;
   const char *optstring = "abc:";
-  while ((o = getopt(argc, argv, optstring) != -1)) {
+  while ((o = getopt(argc, argv, optstring)) != -1) {
     switch (o) {
     case 'a':
-      std::cout << "opt is a, optarg is: " << optarg << std::endl;
-        break;
+      printf("opt is a, optarg is %s\n", optarg);  // cout输出空指针会崩溃
+      break;
     case 'b':
-      std::cout << "opt is a, optarg is: " << optarg << std::endl;
-        break;
+      printf("opt is b, optarg is %s\n", optarg);
+      break;
     case 'c':
-      std::cout << "opt is a, optarg is: " << optarg << std::endl;
-        break;
+      printf("opt is c, optarg is %s\n", optarg);
+      break;
     default:
-        break;
+      printf("invalid arguments\n");
+      break;
     }
   }
+  return 0;
 }

@@ -15,7 +15,6 @@
 //     }
 // };
 
-
 class UserService : public callee::UserServiceRpc {
   public:
     bool Login(std::string name, std::string pwd) {
