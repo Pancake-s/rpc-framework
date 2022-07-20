@@ -23,10 +23,21 @@ if(NOT TARGET muduo::net)
 endif()
 # -------------------------------
 
+add_custom_command(
+  OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/rpcheader.pb.cc"
+         "${CMAKE_CURRENT_SOURCE_DIR}/rpcheader.pb.h"
+  DEPENDS protobuf::protoc "./rpcheader.proto"
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  COMMAND ${CMAKE_BINARY_DIR}/output/protoc -I=. --cpp_out=. rpcheader.proto
+  COMMENT "Running C++ protocol buffer compiler on rpcheader.proto"
+  VERBATIM
+)
+
 add_library(mprpc
   mprpcapplication.cc
   mprpcprovider.cc
   mprpcconfig.cc
+  rpcheader.pb.cc
 )
 
 target_include_directories(mprpc
