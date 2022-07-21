@@ -20,5 +20,13 @@ int main() {
         std::cout << req_b.name() << std::endl;
         std::cout << req_b.pwd()  << std::endl;
     }
+    
+    send_str.push_back('x');
+    if (req_b.ParseFromString(send_str)) {
+        std::cout << req_b.name() << std::endl;
+        std::cout << req_b.pwd()  << std::endl;
+    } else {
+        std::cout << "Parse failed" << std::endl;
+    }
     return 0;
 }
