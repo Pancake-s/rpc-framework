@@ -37,6 +37,7 @@ add_library(mprpc
   mprpcapplication.cc
   mprpcprovider.cc
   mprpcconfig.cc
+  mprpcchannel.cc
   rpcheader.pb.cc
 )
 

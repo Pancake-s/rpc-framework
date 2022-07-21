@@ -109,7 +109,16 @@ void RpcProvider::OnMessage(const muduo::net::TcpConnectionPtr &conn,
                                                                   (this, 
                                                                   &RpcProvider::SendRpcResponse, 
                                                                   conn, response);
-  service->CallMethod(method, nullptr, request, response, done);
+  /*
+  // See Closure.
+  template <typename Class, typename Arg1, typename Arg2>
+  inline Closure* NewCallback(Class* object, void (Class::*method)(Arg1, Arg2),
+                              Arg1 arg1, Arg2 arg2) {
+    return new internal::MethodClosure2<Class, Arg1, Arg2>(
+      object, method, true, arg1, arg2);
+  }  传进provider和provider的一个方法，方法含有两个args
+  */
+  service->CallMethod(method, nullptr, request, response, done);  // CallMethod实现Login功能后，执行done回调，把结果信息序列化后发送出去
 }
 
 void RpcProvider::SendRpcResponse(const muduo::net::TcpConnectionPtr& conn, google::protobuf::Message *response)
