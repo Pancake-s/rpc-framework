@@ -38,7 +38,10 @@ add_library(mprpc
   mprpcprovider.cc
   mprpcconfig.cc
   mprpcchannel.cc
+  mprpccontroller.cc
+  logger.cc
   rpcheader.pb.cc
+  zookeeperutil.cc
 )
 
 target_include_directories(mprpc
@@ -50,6 +53,7 @@ target_link_libraries(mprpc
   PUBLIC muduo::base
   PUBLIC muduo::net
   PRIVATE Threads::Threads
+  PRIVATE zookeeper
 )
 
 add_library(mprpc::mprpc ALIAS mprpc)

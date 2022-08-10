@@ -1,6 +1,7 @@
 #include "mprpcchannel.h"
 #include "rpcheader.pb.h"
 #include <iostream>
+#include <sstream>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
@@ -22,7 +23,8 @@ void MprpcChannel::CallMethod(const MethodDescriptor* method,
   if (request->SerializeToString(&args_str)) {
     args_length = args_str.size();
   } else {
-    std::cout << "serialise request failed" << std::endl;
+    controller->SetFailed("serialise request failed");
+    // std::cout << "serialise request failed" << std::endl;
   }
   // 加入rpcheader
   mprpc::RpcHeader rpc_header;
@@ -34,7 +36,8 @@ void MprpcChannel::CallMethod(const MethodDescriptor* method,
   if (rpc_header.SerializeToString(&header_str)) {
     header_size = header_str.size();
   } else {
-    std::cout << "serialise rpc header failed" << std::endl;
+    // std::cout << "serialise rpc header failed" << std::endl;
+    controller->SetFailed("serialise rpc header failed");
   }
 
   std::string send_rpc_str;
@@ -65,13 +68,19 @@ void MprpcChannel::CallMethod(const MethodDescriptor* method,
 
   if (-1 == connect(clientfd, (struct sockaddr*)&server_addr, sizeof(server_addr))) {
     close(clientfd);
-    std::cout << "connect failed, errno: " << errno << std::endl;
+    // std::cout << "connect failed, errno: " << errno << std::endl;
+    std::ostringstream os;
+    os << "connect failed, errno: " << errno;
+    controller->SetFailed(os.str());
     return;
   }
 
   if (-1 == send(clientfd, send_rpc_str.c_str(), send_rpc_str.size(), 0)) {
     close(clientfd);
-    std::cout << "send failed, errno: " << errno << std::endl;
+    // std::cout << "send failed, errno: " << errno << std::endl;
+    std::ostringstream os;
+    os << "send failed, errno: " << errno;
+    controller->SetFailed(os.str());
     return;
   }
 
@@ -80,13 +89,19 @@ void MprpcChannel::CallMethod(const MethodDescriptor* method,
   int recv_size = 0;
   if (-1 == (recv_size = recv(clientfd, recv_buf, 1024, 0))) {
     close(clientfd);
-    std::cout << "recv failed, errno: " << errno << std::endl;
+    // std::cout << "recv failed, errno: " << errno << std::endl;
+    std::ostringstream os;
+    os << "recv failed, errno: " << errno;
+    controller->SetFailed(os.str());
     return;
   }
   // 反序列化response
   if (!response->ParseFromArray(recv_buf, recv_size)) {
     close(clientfd);
-    std::cout << "parse response failed, str = " << recv_buf << std::endl;
+    // std::cout << "parse response failed, str = " << recv_buf << std::endl;
+    std::ostringstream os;
+    os << "parse response failed, str = " << recv_buf;
+    controller->SetFailed(os.str());
   }
   
   close(clientfd);

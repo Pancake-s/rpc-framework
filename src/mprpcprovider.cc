@@ -3,6 +3,7 @@
 #include "rpcheader.pb.h"
 #include <string>
 #include <iostream>
+#include "logger.h"
 using google::protobuf::Service;
 
 void RpcProvider::NotifyService(Service *service) {
@@ -14,13 +15,15 @@ void RpcProvider::NotifyService(Service *service) {
 
   size_t methodCnt = pserviceDesc->method_count();
 
-  std::cout << "service_name:" << service_name << std::endl;
+  LOG_INFO("service_name: %s", service_name.c_str());
+  // std::cout << "service_name:" << service_name << std::endl;
 
   for (size_t i = 0; i < methodCnt; ++i) {
     const google::protobuf::MethodDescriptor *pmethodDesc = pserviceDesc->method(i);
     std::string method_name = pmethodDesc->name();
     service_info.m_method_map.insert({method_name, pmethodDesc}); //插入键值对到map中
-    std::cout << "method: " << method_name << std::endl;         //打印
+    LOG_INFO("method_name: %s", method_name.c_str());
+    // std::cout << "method_name: " << method_name << std::endl;         //打印
   }
   service_info.m_service = service;                  //记录服务对象
   m_service_map.insert({service_name, service_info}); //存储一下服务及其具体的描述
@@ -39,7 +42,8 @@ void RpcProvider::Run() {
 
   server.setThreadNum(4); // 1 for I/O, 3 for working threads
 
-  std::cout << "RpcProvider start service at ip: " << ip << " port: " << port << std::endl;
+  // std::cout << "RpcProvider start service at ip: " << ip << " port: " << port << std::endl;
+  LOG_INFO("RpcProvider start service at ip: %s port: %d", ip.c_str(), port);
 
   server.start();
   m_eventLoop.loop(); // epoll_wait, wait for connections

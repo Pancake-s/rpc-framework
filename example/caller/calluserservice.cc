@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
 
   example::LoginResponse response;
   // 发起rpc方法调用，发起同步MprpcChannel::CallMethod过程
-  stub.Login(nullptr, &request, &response, nullptr);
+  stub.Login(nullptr, &request, &response, nullptr);  // 376 - CallMethod不一定成功，可能没有response（空的） - rpccontroller来控制
   if (0 == response.result().errcode()) {
     std::cout << "rpc login success" << std::endl;
   } else {

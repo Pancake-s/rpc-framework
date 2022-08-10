@@ -17,7 +17,7 @@ message LoginRequest {
 message LoginResponse {
   ResultCode result = 1;
   bool success = 2;
-}·
+}
 
 message RegisterRequest {
   uint32 id = 1;

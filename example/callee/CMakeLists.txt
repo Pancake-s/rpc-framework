@@ -36,6 +36,7 @@ add_custom_command(
 add_executable(provider
   userservice.cc
   ../caller/user.pb.cc
+  ../../src/logger.cc
 )
 
 target_include_directories(provider
@@ -44,7 +45,7 @@ target_include_directories(provider
 
 target_link_libraries(provider
   PRIVATE protobuf::libprotobuf
-  
+  # PUBLIC Threads::Threads
   PUBLIC muduo::base
   PUBLIC muduo::net
   PRIVATE mprpc::mprpc

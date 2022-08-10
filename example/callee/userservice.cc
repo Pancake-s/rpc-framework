@@ -4,6 +4,7 @@
 #include "user.pb.h"
 #include "mrpcprovider.h" // 有隐藏依赖的问题
 #include "mprpcapplication.h"
+#include "logger.h"
 
 // 本地服务 Login() GetFriendLists()
 
@@ -74,6 +75,8 @@ class UserService : public example::UserServiceRpc {
 
 int main(int argc, char **argv) {
   // Initialisation
+  LOG_ERR("this is userservice");
+
   MprpcApplication::Init(argc, argv);
 
   // provider是一个rpc网络的服务对象，把UserService对象发布到rpc节点上
